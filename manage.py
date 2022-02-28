@@ -54,7 +54,7 @@ if __name__ == '__main__':
         # the server
         asyncio.ensure_future(server)
         # kafka python
-        asyncio.ensure_future(kafka_consumer())
+        # asyncio.ensure_future(kafka_consumer())
         # confluent kafka python
-        asyncio.ensure_future(kafka_consumer_confluent())
+        # asyncio.ensure_future(kafka_consumer_confluent())
         loop.run_forever()
