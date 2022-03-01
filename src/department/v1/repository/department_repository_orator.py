@@ -9,9 +9,6 @@ class DepartmentRepositoryOrator(DepartmentRepository):
     def get_all(self, request_object):
         query = self.db.table('department')
 
-        if request_object.title != "":
-            query = query.where('title', 'like', '%{}'.format(request_object.title))
-
         query = query.get()
 
         result = []
@@ -20,7 +17,7 @@ class DepartmentRepositoryOrator(DepartmentRepository):
                 'id': row['id'],
                 'name': row['name'],
                 'status': row['status'],
-                'create_at': row['create_at'],
+                'created_at': row['created_at'],
                 'modified_at': row['modified_at']
             })
             result.append(data)

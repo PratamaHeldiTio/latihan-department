@@ -1,7 +1,7 @@
 from config.config import Config
 from src.department.v1.usecase.abc_department_usecase import DepartmentUsecase
 from src.shared.response_object import ResponseSuccess
-from src.department.v1.serializers.departent_serializers import ListDepartment
+from src.department.v1.serializers.department_serializers import ListDepartment
 
 class ListDepartmentUsecase(DepartmentUsecase):
     def __init__(self, repo):
@@ -16,7 +16,7 @@ class ListDepartmentUsecase(DepartmentUsecase):
             'success': True,
             'code': Config.STATUS_CODES[Config.SUCCESS],
             'message': Config.SUCCESS.lower(),
-            'data': serialize.data
+            'data': serialize
         }
 
         return ResponseSuccess(response)
