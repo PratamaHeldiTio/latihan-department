@@ -1,0 +1,51 @@
+[
+  {
+    "id": "get_list_department",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "schema get list department",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": [
+          "string"
+        ]
+      },
+       "status": {
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive"
+        ]
+      },
+      "sortBy": {
+        "type": "string",
+        "enum": [
+          "name"
+        ]
+      },
+      "orderBy": {
+        "type": "string",
+        "enum": [
+          "desc",
+          "asc",
+          "DESC",
+          "ASC"
+        ]
+      },
+      "limit": {
+        "type": [
+          "string",
+          "integer"
+        ],
+        "pattern": "^[1-9]\\d*$"
+      },
+      "page": {
+        "type": [
+          "string",
+          "integer"
+        ],
+        "pattern": "^[1-9]\\d*$"
+      }
+    }
+  }
+]

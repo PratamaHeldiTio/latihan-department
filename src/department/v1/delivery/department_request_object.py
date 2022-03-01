@@ -1,18 +1,18 @@
 from src.shared import helper
 from src.shared.request_object import ValidRequestObject, InvalidRequestObject
+from config.schemas.json.loader import JSONSchemaLoader
 
 class ListDepartmentRequestObject(ValidRequestObject):
-    def __init__(self, title):
-        self.title = title
+
+    def __init__(self, **kwargs):
+        self.order_by = kwargs.get("order_by")
+        self.limit = kwargs.get("limit")
+        self.page = kwargs.get("page")
 
     @classmethod
-    def from_dict(cls, adict, validator):
-        schema = {
-            'title': {
-                'type': 'string',
-                'required': False,
-            }
-        }
+    def from_dict(cls, adict, validator=None):
+        JSONSchemaLoader.load(path='config/schemas/json/', filename="*.json")
+        schema = JSONSchemaLoader.get("get_list_department")
 
         if not validator.is_valid(adict=adict, schema=schema):
             invalid_req = InvalidRequestObject()
@@ -21,9 +21,4 @@ class ListDepartmentRequestObject(ValidRequestObject):
 
         data = validator.get_valid_data()
 
-        return ListDepartmentRequestObject(
-            title=helper.get_value_from_dict(data, 'title', '')
-        )
-
-    def __nonzero__(self):
-        return True
+        return ListDepartmentRequestObject(data=data)
