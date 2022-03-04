@@ -22,3 +22,18 @@ class ListDepartmentRequestObject(ValidRequestObject):
         data = validator.get_valid_data()
 
         return ListDepartmentRequestObject(data=data)
+
+# class CreateDeparmentRequestObject(ValidRequestObject):
+#     @classmethod
+#     def from_dict(cls, adict, validator=None):
+#         JSONSchemaLoader.load(path='config/schemas/json/', filename="*.json")
+#         schema = JSONSchemaLoader.get("create_department")
+#
+#         if not validator.is_valid(adict=adict, schema=schema):
+#             invalid_req = InvalidRequestObject()
+#             invalid_req.parse_error(errors=validator.get_errors())
+#             return invalid_req
+#
+#         data = validator.get_valid_data()
+#
+#         return CreateDeparmentRequestObject(data=data)
