@@ -48,7 +48,7 @@ class UpdateDepartmentUsecase(DepartmentUsecase):
 
         response = {
             'success': True,
-            'code': Config.HTTP_STATUS_CODES[200],
+            'code': Config.STATUS_CODES[Config.SUCCESS],
             'message': Config.SUCCESS.lower(),
             'data': []
         }
