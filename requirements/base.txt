@@ -26,10 +26,6 @@ orator==0.9.7
 # https://github.com/un33k/python-slugify
 python-slugify==1.2.5
 
-# Psycopg is the most popular PostgreSQL database adapter for the Python programming language.
-# http://initd.org/psycopg/docs/
-psycopg2-binary==2.8.0
-
 # The Python interface to the Redis key-value store.
 # https://github.com/andymccurdy/redis-py
 redis==3.0.0

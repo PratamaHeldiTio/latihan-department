@@ -47,5 +47,25 @@
         "pattern": "^[1-9]\\d*$"
       }
     }
+  },
+  {
+    "id": "create_department",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "schema create department",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": [
+          "string"
+        ]
+      },
+       "status": {
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive"
+        ]
+      }
+    }
   }
 ]

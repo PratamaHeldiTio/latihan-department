@@ -6,3 +6,7 @@ class ListDepartment(Schema):
     status = fields.Str(attribute="status")
     createdAt = fields.Str(attribute="created_at")
     modifiedAt = fields.Str(attribute="modified_at")
+
+class CreateDepartment(Schema):
+    name = fields.Str(attribute="name")
+    status = fields.Str(attribute="status")
