@@ -1,6 +1,6 @@
 from config.config import Config
 from src.department.v1.usecase.abc_department_usecase import DepartmentUsecase
-from src.shared.response_object import ResponseSuccess
+from src.shared import response_object as ro
 from src.department.v1.serializers.department_serializers import ListDepartment, CreateDepartment
 from src.department.v1.domain.department import Department
 
@@ -8,8 +8,8 @@ class ListDepartmentUsecase(DepartmentUsecase):
     def __init__(self, repo):
         self.repo = repo
 
-    def process_request(self, request_object):
-        department = self.repo.get_all(request_object)
+    def process_request(self, request_objects):
+        department = self.repo.get_all(request_objects)
         schema = ListDepartment()
         serialize = schema.dump(department, many=True)
         print(serialize)
@@ -20,7 +20,7 @@ class ListDepartmentUsecase(DepartmentUsecase):
             'data': serialize
         }
 
-        return ResponseSuccess(response)
+        return ro.ResponseSuccess(response)
 
 class CreateDepartmentUsecase(DepartmentUsecase):
     def __init__(self, repo):
@@ -36,5 +36,54 @@ class CreateDepartmentUsecase(DepartmentUsecase):
             'data': []
         }
 
-        return ResponseSuccess(response)
+        return ro.ResponseSuccess(response)
 
+class UpdateDepartmentUsecase(DepartmentUsecase):
+    def __init__(self, repo):
+        self.repo = repo
+
+    def process_request(self, request_object):
+    # update data
+        update_department = self.repo.update_by_id(request_object)
+
+        if update_department:
+            response = {
+                'success': True,
+                'code': Config.HTTP_STATUS_CODES[Config.SUCCESS],
+                'message': Config.SUCCESS.lower(),
+                'data': []
+            }
+            return  ro.ResponseSuccess(response)
+        else:
+            response = {
+                'success': False,
+                'code': Config.HTTP_STATUS_CODES[404],
+                'message': Config.DATA_NOT_FOUND.lower(),
+                'data': []
+            }
+            return ro.ResponseFailure(response)
+
+class DeleteDepartmentUsecase(DepartmentUsecase):
+    def __init__(self, repo):
+        self.repo = repo
+
+    def process_request(self, request_object):
+    # delete data
+        update_department = self.repo.delete_by_id(request_object)
+
+        if update_department:
+            response = {
+                'success': True,
+                'code': Config.HTTP_STATUS_CODES[Config.SUCCESS],
+                'message': Config.SUCCESS.lower(),
+                'data': []
+            }
+            return  ro.ResponseSuccess(response)
+        else:
+            response = {
+                'success': False,
+                'code': Config.HTTP_STATUS_CODES[404],
+                'message': Config.DATA_NOT_FOUND.lower(),
+                'data': []
+            }
+            return ro.ResponseFailure(response)

@@ -11,8 +11,8 @@ class DepartmentRepository(ABC, object):
     @abstractmethod
     def create(self, adict): pass
     #
-    # @abstractmethod
-    # def update(self, adict): pass
+    @abstractmethod
+    def update_by_id(self, adict): pass
     #
     # @abstractmethod
     # def delete(self, adict): pass
