@@ -44,24 +44,15 @@ class UpdateDepartmentUsecase(DepartmentUsecase):
 
     def process_request(self, request_object):
     # update data
-        update_department = self.repo.update_by_id(request_object)
+        self.repo.update_by_id(request_object)
 
-        if update_department:
-            response = {
-                'success': True,
-                'code': Config.HTTP_STATUS_CODES[Config.SUCCESS],
-                'message': Config.SUCCESS.lower(),
-                'data': []
-            }
-            return  ro.ResponseSuccess(response)
-        else:
-            response = {
-                'success': False,
-                'code': Config.HTTP_STATUS_CODES[404],
-                'message': Config.DATA_NOT_FOUND.lower(),
-                'data': []
-            }
-            return ro.ResponseFailure(response)
+        response = {
+            'success': True,
+            'code': Config.HTTP_STATUS_CODES[200],
+            'message': Config.SUCCESS.lower(),
+            'data': []
+        }
+        return ro.ResponseSuccess(response)
 
 class DeleteDepartmentUsecase(DepartmentUsecase):
     def __init__(self, repo):
@@ -69,21 +60,12 @@ class DeleteDepartmentUsecase(DepartmentUsecase):
 
     def process_request(self, request_object):
     # delete data
-        update_department = self.repo.delete_by_id(request_object)
+        self.repo.delete_by_id(request_object)
 
-        if update_department:
-            response = {
-                'success': True,
-                'code': Config.HTTP_STATUS_CODES[Config.SUCCESS],
-                'message': Config.SUCCESS.lower(),
-                'data': []
-            }
-            return  ro.ResponseSuccess(response)
-        else:
-            response = {
-                'success': False,
-                'code': Config.HTTP_STATUS_CODES[404],
-                'message': Config.DATA_NOT_FOUND.lower(),
-                'data': []
-            }
-            return ro.ResponseFailure(response)
+        response = {
+            'success': True,
+            'code': Config.STATUS_CODES[Config.SUCCESS],
+            'message': Config.SUCCESS.lower(),
+            'data': []
+        }
+        return ro.ResponseSuccess(response)
