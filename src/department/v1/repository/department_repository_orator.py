@@ -7,9 +7,7 @@ class DepartmentRepositoryOrator(DepartmentRepository):
         self.db = db
 
     def get_all(self, request_objects):
-        query = self.db.table('department')
-
-        query = query.get()
+        query = self.db.table('department').get()
 
         result = []
         for row in query:
@@ -24,12 +22,27 @@ class DepartmentRepositoryOrator(DepartmentRepository):
 
         return result
 
-    def create(self, request_object):
+    def create(self, request_objects):
         query = self.db.table('department').insert({
-            'name': request_object['name'],
-            'status': request_object['status'],
+            'name': request_objects['name'],
+            'status': request_objects['status'],
             'created_at': helper.get_now_timestamp(),
             'modified_at': helper.get_now_timestamp(),
         })
 
         return query
+
+    def update_by_id(self, request_objects):
+        query = self.db.table('department').where('id', request_objects['id']).update({
+            'name': request_objects['name'],
+            'status': request_objects['status'],
+            'modified_at': helper.get_now_timestamp()
+        })
+
+        return query
+
+    def delete_by_id(self, request_objects):
+        query = self.db.table('department').where('id', request_objects['id']).delete()
+
+        return query
+
