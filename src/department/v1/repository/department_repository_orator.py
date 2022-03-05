@@ -24,8 +24,8 @@ class DepartmentRepositoryOrator(DepartmentRepository):
 
     def create(self, request_objects):
         query = self.db.table('department').insert({
-            'name': request_objects['name'],
-            'status': request_objects['status'],
+            'name': getattr(request_objects, "name"),
+            'status': getattr(request_objects, "status"),
             'created_at': helper.get_now_timestamp(),
             'modified_at': helper.get_now_timestamp(),
         })
