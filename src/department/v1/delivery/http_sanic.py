@@ -8,7 +8,7 @@ from src.department.v1.usecase.department_usecase import \
     CreateDepartmentUsecase, \
     UpdateDepartmentUsecase, \
     DeleteDepartmentUsecase
-from src.department.v1.delivery.department_request_object import ListDepartmentRequestObject
+from src.department.v1.delivery.department_request_object import ListDepartmentRequestObject, CreateDeparmentRequestObject
 from src.shared.validator.validator_jsonschema import JSONSchemaValidator
 
 
@@ -19,8 +19,9 @@ async def index(request):
     obj_dict = RequestSanicDict(request).parse_all_to_dict()
     repo_init = DepartmentRepositoryOrator(db=request.app.db)
 
+    validator = JSONSchemaValidator()
+
     if request.method == 'GET':
-        validator = JSONSchemaValidator()
         usecase = ListDepartmentUsecase(repo=repo_init)
 
         request_dict = RequestSanicDict(request)
@@ -30,7 +31,10 @@ async def index(request):
 
     if request.method == 'POST':
         usecase = CreateDepartmentUsecase(repo=repo_init)
-        response_object = usecase.execute(obj_dict)
+        request_dict = RequestSanicDict(request)
+        adict = request_dict.json_to_dict()
+        request_object = CreateDeparmentRequestObject.from_dict(adict=adict, validator=validator)
+        response_object = usecase.execute(request_object)
 
     return  json(response_object.value, status=Config.STATUS_CODES[response_object.type])
 
