@@ -29,7 +29,7 @@ class RequestSanicDict(Request):
     def query_to_dict(self):
         dict_d = {}
         try:
-            dict_d.update(self.request.raw_args)
+            dict_d.update(self.request.query_args)
         except Exception as e:
             pass
 
@@ -45,4 +45,3 @@ class RequestSanicDict(Request):
             pass
 
         return dict_d
-    

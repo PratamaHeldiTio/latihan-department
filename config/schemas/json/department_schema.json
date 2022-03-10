@@ -5,26 +5,19 @@
     "description": "schema get list department",
     "type": "object",
     "properties": {
-      "name": {
-        "type": [
-          "string"
-        ]
-      },
-       "status": {
-        "type": "string",
-        "enum": [
-          "active",
-          "inactive"
-        ]
+      "search": {
+        "type": "string"
       },
       "sortBy": {
         "type": "string",
+        "default": "id",
         "enum": [
           "name"
         ]
       },
       "orderBy": {
         "type": "string",
+        "default": "asc",
         "enum": [
           "desc",
           "asc",
@@ -37,6 +30,7 @@
           "string",
           "integer"
         ],
+        "default": "10",
         "pattern": "^[1-9]\\d*$"
       },
       "page": {
@@ -44,6 +38,7 @@
           "string",
           "integer"
         ],
+        "default": "1",
         "pattern": "^[1-9]\\d*$"
       }
     }
@@ -55,9 +50,27 @@
     "type": "object",
     "properties": {
       "name": {
-        "type": [
-          "string"
+        "type": "string"
+      },
+       "status": {
+        "type": "string",
+        "enum": [
+          "active",
+          "inactive"
         ]
+      }
+    }
+  },{
+    "id": "update_department",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "schema update department",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "name": {
+        "type": "string"
       },
        "status": {
         "type": "string",
