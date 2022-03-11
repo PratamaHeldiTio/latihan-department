@@ -1,0 +1,88 @@
+[
+  {
+    "id": "get_list_article",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "schema get list article",
+    "type": "object",
+    "properties": {
+      "search": {
+        "type": "string"
+      },
+      "sortBy": {
+        "type": "string",
+        "enum": [
+          "title",
+          "created_at"
+        ]
+      },
+      "orderBy": {
+        "type": "string",
+        "enum": [
+          "desc",
+          "asc",
+          "DESC",
+          "ASC"
+        ]
+      },
+      "limit": {
+        "type": [
+          "string",
+          "integer"
+        ],
+        "pattern": "^[1-9]\\d*$"
+      },
+      "page": {
+        "type": [
+          "string",
+          "integer"
+        ],
+        "pattern": "^[1-9]\\d*$"
+      }
+    }
+  },
+  {
+    "id": "create_article",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "schema create article",
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string",
+        "maxLength": 100
+      },
+       "content": {
+        "type": "string"
+      },
+      "createdBy": {
+        "type": "string"
+      },
+      "modifiedBy": {
+        "type": "string"
+      }
+    }
+  },
+  {
+    "id": "update_article",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "description": "schema update department",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "title": {
+        "type": "string",
+        "maxLength": 100
+      },
+       "content": {
+        "type": "string"
+      },
+       "createdBy": {
+        "type": "string"
+      },
+      "modifiedBy": {
+        "type": "string"
+      }
+    }
+  }
+]

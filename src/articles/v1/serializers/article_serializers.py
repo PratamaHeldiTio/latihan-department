@@ -1,11 +1,20 @@
 from marshmallow import Schema, fields
 
-class ListArticle(Schema):
-
-    id = fields.Str(attribute="id")
+class ListArticleToJsonFormat(Schema):
+    id = fields.Int(attribute="id")
     title = fields.Str(attribute="title")
-    categoryId = fields.Str(attribute="category_id")
-    authorId = fields.Str(attribute="author_id")
     content = fields.Str(attribute="content")
-    isActive = fields.Bool(attribute="is_active")
-    
+    createdAt = fields.Str(attribute='created_at')
+    modifiedAt = fields.Str(attribute='modified_at')
+    createdBy = fields.Str(attribute='created_by')
+    modifiedBy = fields.Str(attribute='modified_by')
+
+
+class ListArticleToVariavleFormat(Schema):
+    id = fields.Int(attribute="id")
+    title = fields.Str(attribute="title")
+    content = fields.Str(attribute="content")
+    created_at = fields.Str(attribute='createdAt')
+    modified_at = fields.Str(attribute='modifiedAt')
+    created_by = fields.Str(attribute='createdBy')
+    modified_by = fields.Str(attribute='modifiedBy')
