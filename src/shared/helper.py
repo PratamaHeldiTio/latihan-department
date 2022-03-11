@@ -1,5 +1,6 @@
 from datetime import datetime
 from collections import namedtuple
+from config.config import Config
 
 def get_now_timestamp():
     return datetime.now()
@@ -22,3 +23,23 @@ def build_prev_url(url, cur_page, prev_page):
 def dict_to_obj(adict):
 
     return namedtuple('Struct', adict.keys())(*adict.values())
+
+
+def response_object(status_code, message, data=[], meta=None):
+    if meta:
+        response = {
+            'success': True,
+            'code': Config.STATUS_CODES[status_code],
+            'message': Config.MESSAGE[message].lower(),
+            'data': data,
+            'meta': meta
+        }
+    else:
+        response = {
+            'success': True,
+            'code': Config.STATUS_CODES[status_code],
+            'message': Config.MESSAGE[message].lower(),
+            'data': data,
+        }
+
+    return response
