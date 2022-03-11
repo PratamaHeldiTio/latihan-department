@@ -10,14 +10,20 @@ class ListDepartmentUsecase(DepartmentUsecase):
 
     def process_request(self, request_objects):
         department = self.repo.get_all(request_objects)
+        total = self.repo.get_total(request_objects)
         schema = ListDepartment()
         serialize = schema.dump(department, many=True)
-        print(serialize)
+
         response = {
             'success': True,
             'code': Config.STATUS_CODES[Config.SUCCESS],
             'message': Config.SUCCESS.lower(),
-            'data': serialize
+            'data': serialize,
+            'meta': {
+                'page': getattr(request_objects, 'page'),
+                'limit': getattr(request_objects, 'limit'),
+                'total': total
+            }
         }
 
         return ro.ResponseSuccess(response)
@@ -58,9 +64,9 @@ class DeleteDepartmentUsecase(DepartmentUsecase):
     def __init__(self, repo):
         self.repo = repo
 
-    def process_request(self, request_object):
+    def process_request(self, id):
     # delete data
-        self.repo.delete_by_id(request_object)
+        self.repo.delete_by_id(id)
 
         response = {
             'success': True,
