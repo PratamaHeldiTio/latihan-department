@@ -1,7 +1,7 @@
 from config.config import Config
 from src.department.v1.usecase.abc_department_usecase import DepartmentUsecase
 from src.shared import response_object as ro
-from src.department.v1.serializers.department_serializers import ListDepartment, CreateDepartment
+from src.department.v1.serializers.department_serializers import ListDepartment
 from src.department.v1.domain.department import Department
 
 class ListDepartmentUsecase(DepartmentUsecase):

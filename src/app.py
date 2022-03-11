@@ -6,6 +6,7 @@ from sanic_cors import CORS
 
 from config.config import Config
 from src.department.v1.delivery.http_sanic import bp_department
+from src.articles.v1.delivery.http_sanic import bp_articles
 # from kafka import KafkaConsumer
 # from confluent_kafka import Consumer, KafkaError
 
@@ -68,6 +69,7 @@ def create_app(config):
     app = Sanic(__name__)
     app.config.from_object(config)
     app.blueprint(bp_department)
+    app.blueprint(bp_articles)
     CORS(app, automatic_options=True)
     
     return app

@@ -3,21 +3,21 @@ class Article(object):
         self.id = kwargs.get('id')
         self.title = kwargs.get('title')
         self.content = kwargs.get('content')
-        self.category_id = kwargs.get('category_id')
-        self.author_id = kwargs.get('author_id')
         self.created_at = kwargs.get('created_at')
-        self.updated_at = kwargs.get('updated_at')
+        self.modified_at = kwargs.get('modified_at')
+        self.created_by = kwargs.get('created_by')
+        self.modified_by = kwargs.get('modified_by')
 
     @classmethod
-    def from_dict(self, adict):
+    def from_dict(cls, adict):
         article = Article(**{
             "id": adict.get('id'),
             "title": adict.get('title'),
             "content": adict.get('content'),
-            "category_id": adict.get('category_id'),
-            "author_id": adict.get('author_id'),
             "created_at": adict.get('created_at'),
-            "updated_at": adict.get('updated_at')
+            "modified_at": adict.get('modified_at'),
+            "created_by": adict.get('created_by'),
+            "modified_by": adict.get('modified_by')
         })
 
         return article
