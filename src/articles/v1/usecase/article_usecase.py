@@ -19,7 +19,7 @@ class ListArticleUsecase(ArticleUsecase):
             'success': True,
             'code': Config.STATUS_CODES[Config.SUCCESS],
             'message': Config.SUCCESS.lower(),
-            'data': serialize.data,
+            'data': serialize,
             'meta': {
                 'page': getattr(request_objects, 'page'),
                 'limit': getattr(request_objects, 'limit'),

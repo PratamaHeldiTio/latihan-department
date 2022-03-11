@@ -22,7 +22,7 @@ class ListArticleRequestObject(ValidRequestObject):
 
         data = validator.get_valid_data()
 
-        return CreateArticleRequestObject(**{
+        return ListArticleRequestObject(**{
             "sortBy": data.get("sortBy", "id"),
             "orderBy": data.get("orderBy", "asc"),
             "limit": int(data.get("limit", "10")),
@@ -37,8 +37,8 @@ class CreateArticleRequestObject(ValidRequestObject):
     def __init__(self, **kwargs):
         self.title = kwargs.get('title')
         self.content = kwargs.get('content')
-        self.created_by = kwargs.get('createdBy')
-        self.modified_by = kwargs.get('modifiedBy')
+        self.created_by = kwargs.get('created_by')
+        self.modified_by = kwargs.get('modified_by')
 
     @classmethod
     def from_dict(cls, adict, validator=None):
@@ -64,8 +64,8 @@ class UpdateArticleRequestObject(ValidRequestObject):
         self.id = kwargs.get('id')
         self.title = kwargs.get('title')
         self.content = kwargs.get('content')
-        self.created_by = kwargs.get('createdBy')
-        self.modified_by = kwargs.get('modifiedBy')
+        self.created_by = kwargs.get('created_by')
+        self.modified_by = kwargs.get('modified_by')
 
     @classmethod
     def from_dict(cls, adict, validator=None):

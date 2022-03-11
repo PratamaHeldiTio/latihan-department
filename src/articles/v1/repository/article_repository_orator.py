@@ -28,10 +28,10 @@ class ArticleRepositoryOrator(ArticleRepository):
                 'id': row['id'],
                 'title': row['title'],
                 'content': row['content'],
-                'category_id': row['category_id'],
-                'author_id': row['author_id'],
                 'created_at': row['created_at'],
-                'updated_at':row['updated_at']
+                'modified_at':row['modified_at'],
+                'created_by': row['created_by'],
+                'modified_by': row['modified_by'],
             })
             result.append(data)
 
@@ -71,11 +71,12 @@ class ArticleRepositoryOrator(ArticleRepository):
         })
 
     def update_by_id(self, request_object):
-        return self.db.table('article').where('id', request_object.id).update({
+        return self.db.table('article').where('id', getattr(request_object, 'id')).update({
             'title': getattr(request_object, 'title'),
             'content': getattr(request_object, 'content'),
             'created_by': getattr(request_object, 'created_by'),
             'modified_by': getattr(request_object, 'modified_by'),
+            'modified_at': helper.get_now_timestamp()
         })
 
     def delete_by_id(self, id):

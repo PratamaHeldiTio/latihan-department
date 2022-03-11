@@ -6,7 +6,8 @@ from src.shared.request.request_sanic import RequestSanicDict
 from src.articles.v1.usecase.article_usecase import \
     ListArticleUsecase, \
     CreateArticleUsecase, \
-    UpdateArticleUsecase
+    UpdateArticleUsecase, \
+    DeleteArticleUsecase
 from src.articles.v1.delivery.article_request_object import \
     ListArticleRequestObject, \
     CreateArticleRequestObject, \
@@ -19,7 +20,7 @@ bp_articles = Blueprint('V1/Articles', url_prefix='v1/articles')
 async def index(request):
     request_dict = RequestSanicDict(request)
     repo_init = ArticleRepositoryOrator(db=request.app.db)
-    validator = JSONSchemaValidator
+    validator = JSONSchemaValidator()
 
     if request.method == 'GET':
         usecase = ListArticleUsecase(repo=repo_init)
@@ -39,7 +40,7 @@ async def index(request):
 async def detail(request, identifier):
     request_dict = RequestSanicDict(request)
     repo_init = ArticleRepositoryOrator(db=request.app.db)
-    validator = JSONSchemaValidator
+    validator = JSONSchemaValidator()
     identifier = int(identifier)
 
     if request.method == 'PUT':
@@ -50,7 +51,7 @@ async def detail(request, identifier):
         response_object = usecase.execute(request_object)
 
     if request.method == 'DELETE':
-        usecase = UpdateArticleUsecase(repo=repo_init)
+        usecase = DeleteArticleUsecase(repo=repo_init)
         response_object = usecase.execute(identifier)
 
     return json(response_object.value, status=Config.STATUS_CODES[response_object.type])

@@ -22,6 +22,7 @@ class Config(object):
     DB_PORT = config('DB_PORT')
 
     SUCCESS = 'SUCCESS'
+    CREATED = 'CREATED'
     RESOURCE_ERROR = 'RESOURCE_ERROR'
     PARAMETERS_ERROR = 'PARAMETERS_ERROR'
     SYSTEM_ERROR = 'SYSTEM_ERROR'
@@ -29,8 +30,8 @@ class Config(object):
 
     STATUS_CODES = {
         SUCCESS: 200,
-        DATA_NOT_FOUND: 204,
-        RESOURCE_ERROR: 404,
+        CREATED: 201,
+        DATA_NOT_FOUND: 404,
         PARAMETERS_ERROR: 400,
         SYSTEM_ERROR: 500,
     }
