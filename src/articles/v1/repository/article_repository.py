@@ -15,7 +15,10 @@ class ArticleRepository(ABC, object):
     def update_by_id(self, adict): pass
 
     @abstractmethod
-    def delete_by_id(self, adict): pass
+    def delete_by_id(self, id): pass
 
     @abstractmethod
     def get_total(self, adict): pass
+
+    @abstractmethod
+    def article_is_exist(self, id): pass

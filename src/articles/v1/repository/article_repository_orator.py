@@ -1,5 +1,4 @@
 from src.shared import helper
-from src.articles.v1.domain.article import Article
 from src.articles.v1.repository.article_repository import ArticleRepository
 
 class ArticleRepositoryOrator(ArticleRepository):
@@ -24,7 +23,7 @@ class ArticleRepositoryOrator(ArticleRepository):
 
         result = []
         for row in query:
-            data = Article.from_dict({
+            data = ({
                 'id': row['id'],
                 'title': row['title'],
                 'content': row['content'],
@@ -42,21 +41,21 @@ class ArticleRepositoryOrator(ArticleRepository):
         query = self.db.table('article')
 
         if search:
-            query = query.where('title', '=', '{}'.format(search))
+            query = query.where('title', 'like', '%{}%'.format(search))
 
         return query.count()
 
     # def get_by_id(self, id):
     #     query = self.db.table('article').where('id', id).first()
     #     if query:
-    #         return Article.from_dict({
+    #         query = ({
     #             'id': query['id'],
     #             'title': query['title'],
     #             'content': query['content'],
-    #             'category_id': query['category_id'],
-    #             'author_id': query['author_id'],
-    #             'created_at': helper.get_now_timestamp(),
-    #             'updated_at': helper.get_now_timestamp()
+    #             'created_at': query['created_at'],
+    #             'modified_at':query['modified_at'],
+    #             'created_by': query['created_by'],
+    #             'modified_by': query['modified_by'],
     #         })
     #     return query
 
@@ -81,3 +80,6 @@ class ArticleRepositoryOrator(ArticleRepository):
 
     def delete_by_id(self, id):
         return self.db.table('article').where('id', '=', id).delete()
+
+    def article_is_exist(self, id):
+        return self.db.table('article').where('id', id).count()
