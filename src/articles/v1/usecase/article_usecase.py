@@ -3,6 +3,7 @@ from config.config import Config
 from src.articles.v1.usecase.abc_article_usecase import ArticleUsecase
 from src.shared import response_object as ro
 from src.articles.v1.serializers.article_serializers import ListArticleToJsonFormat
+from src.shared.helper import response_object
 
 class ListArticleUsecase(ArticleUsecase):
 
@@ -14,18 +15,17 @@ class ListArticleUsecase(ArticleUsecase):
         total = self.repo.get_total(request_objects)
         schema = ListArticleToJsonFormat()
         serialize = schema.dump(articles, many=True)
-
-        response = {
-            'success': True,
-            'code': Config.STATUS_CODES[Config.SUCCESS],
-            'message': Config.SUCCESS.lower(),
-            'data': serialize,
-            'meta': {
-                'page': getattr(request_objects, 'page'),
-                'limit': getattr(request_objects, 'limit'),
-                'total': total
-            }
+        meta = {
+            'page': getattr(request_objects, 'page'),
+            'limit': getattr(request_objects, 'limit'),
+            'total': total
         }
+
+        response = response_object(
+            status_code=Config.SUCCESS,
+            message=Config.SUCCESS,
+            data=serialize,
+            meta=meta)
 
         return ro.ResponseSuccess(response)
 
@@ -36,13 +36,7 @@ class CreateArticleUsecase(ArticleUsecase):
     def process_request(self, request_object):
         self.repo.create(request_object)
 
-        response = {
-            'status': True,
-            'code': Config.HTTP_STATUS_CODES[201],
-            'message': Config.SUCCESS.lower(),
-            'data': []
-        }
-
+        response = response_object(status_code=Config.CREATED, message=Config.CREATED)
         return ro.ResponseSuccess(response)
 
 class DeleteArticleUsecase(ArticleUsecase):
@@ -50,15 +44,10 @@ class DeleteArticleUsecase(ArticleUsecase):
         self.repo = repo
 
     def process_request(self, id):
+
         self.repo.delete_by_id(id)
 
-        response = {
-            'status': True,
-            'code': Config.STATUS_CODES[Config.SUCCESS],
-            'message': Config.SUCCESS.lower(),
-            'data': []
-        }
-
+        response = response_object(status_code=Config.SUCCESS, message=Config.SUCCESS)
         return ro.ResponseSuccess(response)
 
 class UpdateArticleUsecase(ArticleUsecase):
@@ -68,11 +57,5 @@ class UpdateArticleUsecase(ArticleUsecase):
     def process_request(self, request_object):
         self.repo.update_by_id(request_object)
 
-        response = {
-            'status': True,
-            'code': Config.STATUS_CODES[Config.SUCCESS],
-            'message': Config.SUCCESS.lower(),
-            'data': []
-        }
-
+        response = response_object(status_code=Config.SUCCESS, message=Config.SUCCESS)
         return ro.ResponseSuccess(response)
