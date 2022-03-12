@@ -2,8 +2,7 @@ from config.config import Config
 from src.department.v1.usecase.abc_department_usecase import DepartmentUsecase
 from src.shared import response_object as ro
 from src.department.v1.serializers.department_serializers import ListDepartment
-from src.department.v1.domain.department import Department
-
+from src.shared.helper import response_object
 class ListDepartmentUsecase(DepartmentUsecase):
     def __init__(self, repo):
         self.repo = repo
@@ -13,19 +12,18 @@ class ListDepartmentUsecase(DepartmentUsecase):
         total = self.repo.get_total(request_objects)
         schema = ListDepartment()
         serialize = schema.dump(department, many=True)
-
-        response = {
-            'success': True,
-            'code': Config.STATUS_CODES[Config.SUCCESS],
-            'message': Config.SUCCESS.lower(),
-            'data': serialize,
-            'meta': {
-                'page': getattr(request_objects, 'page'),
-                'limit': getattr(request_objects, 'limit'),
-                'total': total
-            }
+        meta= {
+            'page': getattr(request_objects, 'page'),
+            'limit': getattr(request_objects, 'limit'),
+            'total': total
         }
 
+        response = response_object(
+            status_code=Config.SUCCESS,
+            message=Config.SUCCESS,
+            data=serialize,
+            meta=meta
+        )
         return ro.ResponseSuccess(response)
 
 class CreateDepartmentUsecase(DepartmentUsecase):
@@ -35,13 +33,7 @@ class CreateDepartmentUsecase(DepartmentUsecase):
     def process_request(self, request_object):
         self.repo.create(request_object)
 
-        response = {
-            'success': True,
-            'code': Config.HTTP_STATUS_CODES[201],
-            'message': Config.SUCCESS.lower(),
-            'data': []
-        }
-
+        response = response_object(status_code=Config.CREATED, message=Config.CREATED)
         return ro.ResponseSuccess(response)
 
 class UpdateDepartmentUsecase(DepartmentUsecase):
@@ -52,12 +44,7 @@ class UpdateDepartmentUsecase(DepartmentUsecase):
     # update data
         self.repo.update_by_id(request_object)
 
-        response = {
-            'success': True,
-            'code': Config.STATUS_CODES[Config.SUCCESS],
-            'message': Config.SUCCESS.lower(),
-            'data': []
-        }
+        response = response_object(status_code=Config.SUCCESS, message=Config.SUCCESS)
         return ro.ResponseSuccess(response)
 
 class DeleteDepartmentUsecase(DepartmentUsecase):
@@ -65,13 +52,7 @@ class DeleteDepartmentUsecase(DepartmentUsecase):
         self.repo = repo
 
     def process_request(self, id):
-    # delete data
         self.repo.delete_by_id(id)
 
-        response = {
-            'success': True,
-            'code': Config.STATUS_CODES[Config.SUCCESS],
-            'message': Config.SUCCESS.lower(),
-            'data': []
-        }
+        response = response_object(status_code=Config.SUCCESS, message=Config.SUCCESS)
         return ro.ResponseSuccess(response)
