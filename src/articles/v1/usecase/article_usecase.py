@@ -44,10 +44,14 @@ class DeleteArticleUsecase(ArticleUsecase):
         self.repo = repo
 
     def process_request(self, id):
+        article_available = self.repo.article_is_exist(id)
 
-        self.repo.delete_by_id(id)
+        if article_available:
+            self.repo.delete_by_id(id)
+            response = response_object(status_code=Config.SUCCESS, message=Config.SUCCESS)
+        else:
+            response = response_object(status_code=Config.DATA_NOT_FOUND, message=Config.DATA_NOT_FOUND)
 
-        response = response_object(status_code=Config.SUCCESS, message=Config.SUCCESS)
         return ro.ResponseSuccess(response)
 
 class UpdateArticleUsecase(ArticleUsecase):
@@ -55,7 +59,12 @@ class UpdateArticleUsecase(ArticleUsecase):
         self.repo = repo
 
     def process_request(self, request_object):
-        self.repo.update_by_id(request_object)
+        article_available = self.repo.article_is_exist(getattr(request_object, 'id'))
 
-        response = response_object(status_code=Config.SUCCESS, message=Config.SUCCESS)
+        if article_available:
+            self.repo.update_by_id(request_object)
+            response = response_object(status_code=Config.SUCCESS, message=Config.SUCCESS)
+        else:
+            response = response_object(status_code=Config.DATA_NOT_FOUND, message=Config.DATA_NOT_FOUND)
+
         return ro.ResponseSuccess(response)
