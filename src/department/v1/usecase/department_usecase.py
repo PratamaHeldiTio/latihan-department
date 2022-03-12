@@ -41,10 +41,14 @@ class UpdateDepartmentUsecase(DepartmentUsecase):
         self.repo = repo
 
     def process_request(self, request_object):
-    # update data
-        self.repo.update_by_id(request_object)
+        # check department is exist
+        department = self.repo.department_is_exist(getattr(request_object, 'id'))
+        if department:
+            self.repo.update_by_id(request_object)
+            response = response_object(status_code=Config.SUCCESS, message=Config.SUCCESS)
+        else:
+            response = response_object(status_code=Config.DATA_NOT_FOUND, message=Config.DATA_NOT_FOUND)
 
-        response = response_object(status_code=Config.SUCCESS, message=Config.SUCCESS)
         return ro.ResponseSuccess(response)
 
 class DeleteDepartmentUsecase(DepartmentUsecase):
@@ -52,7 +56,12 @@ class DeleteDepartmentUsecase(DepartmentUsecase):
         self.repo = repo
 
     def process_request(self, id):
-        self.repo.delete_by_id(id)
+        # check department is exist
+        department = self.repo.department_is_exist(id)
+        if department:
+            self.repo.delete_by_id(id)
+            response = response_object(status_code=Config.SUCCESS, message=Config.SUCCESS)
+        else:
+            response = response_object(status_code=Config.DATA_NOT_FOUND, message=Config.DATA_NOT_FOUND)
 
-        response = response_object(status_code=Config.SUCCESS, message=Config.SUCCESS)
         return ro.ResponseSuccess(response)
