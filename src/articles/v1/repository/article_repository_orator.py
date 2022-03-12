@@ -82,4 +82,4 @@ class ArticleRepositoryOrator(ArticleRepository):
         return self.db.table('article').where('id', '=', id).delete()
 
     def article_is_exist(self, id):
-        return self.db.table('article').where('id', id).count()
+        return self.db.table('article').where('id', '=', id).count()

@@ -18,7 +18,7 @@ class DepartmentRepositoryOrator(DepartmentRepository):
         query = query.offset(offset).limit(getattr(request_object, 'limit')).get()
         result = []
         for row in query:
-            data = Department.from_dict({
+            data = ({
                 'id': row['id'],
                 'name': row['name'],
                 'status': row['status'],
@@ -60,3 +60,6 @@ class DepartmentRepositoryOrator(DepartmentRepository):
             query = query.where('name', 'like', '%{}%'.format(getattr(request_object, 'search')))
 
         return query.count()
+
+    def department_is_exist(self, id):
+        return self.db.table('department').where('id', '=', id).count()
