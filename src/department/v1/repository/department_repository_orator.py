@@ -7,15 +7,20 @@ class DepartmentRepositoryOrator(DepartmentRepository):
         self.db = db
 
     def get_all(self, request_object):
+        search = getattr(request_object, 'search')
         query = self.db.table('department')
+        sort_by = getattr(request_object, 'sortBy')
+        order_by = getattr(request_object, 'orderBy')
+        page =  getattr(request_object, 'page')
+        limit = getattr(request_object, 'limit')
 
-        if getattr(request_object, 'search'):
-            query = query.where('name', 'like', '%{}%'.format(getattr(request_object, 'search')))
+        if search:
+            query = query.where('name', 'ilike', '%{}%'.format(search))
 
-        query = query.order_by(getattr(request_object, 'sortBy'), getattr(request_object, 'orderBy'))
+        query = query.order_by(sort_by, order_by)
 
-        offset = getattr(request_object, 'page') * getattr(request_object, 'limit') - getattr(request_object, 'limit')
-        query = query.offset(offset).limit(getattr(request_object, 'limit')).get()
+        offset = page * limit  - limit
+        query = query.offset(offset).limit(limit).get()
         result = []
         for row in query:
             data = ({
@@ -52,14 +57,6 @@ class DepartmentRepositoryOrator(DepartmentRepository):
         query = self.db.table('department').where('id', id).delete()
 
         return query
-
-    def get_total(self, request_object):
-        query = self.db.table('department')
-
-        if getattr(request_object, 'search'):
-            query = query.where('name', 'like', '%{}%'.format(getattr(request_object, 'search')))
-
-        return query.count()
 
     def department_is_exist(self, id):
         return self.db.table('department').where('id', '=', id).count()

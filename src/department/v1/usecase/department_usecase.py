@@ -9,7 +9,7 @@ class ListDepartmentUsecase(DepartmentUsecase):
 
     def process_request(self, request_objects):
         department = self.repo.get_all(request_objects)
-        total = self.repo.get_total(request_objects)
+        total = len(department)
         schema = ListDepartment()
         serialize = schema.dump(department, many=True)
         meta= {
