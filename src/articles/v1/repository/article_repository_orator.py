@@ -16,7 +16,7 @@ class ArticleRepositoryOrator(ArticleRepository):
         query = self.db.table('article')
 
         if search:
-            query = query.where('title', 'like', '%{}%'.format(search))
+            query = query.where('title', 'ilike', '%{}%'.format(search))
 
         query = query.order_by(sort_by, order_by)
         query = query.offset(offset).limit(limit).get()
