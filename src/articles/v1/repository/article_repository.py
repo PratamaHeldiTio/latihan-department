@@ -16,3 +16,6 @@ class ArticleRepository(ABC, object):
 
     @abstractmethod
     def article_is_exist(self, id): pass
+
+    @abstractmethod
+    def get_total(self, adict): pass

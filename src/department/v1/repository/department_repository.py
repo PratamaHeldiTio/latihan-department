@@ -13,3 +13,6 @@ class DepartmentRepository(ABC, object):
 
     @abstractmethod
     def delete_by_id(self, adict): pass
+
+    @abstractmethod
+    def get_total(self, adict): pass

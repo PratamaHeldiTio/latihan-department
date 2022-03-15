@@ -10,14 +10,14 @@ class ListArticleUsecase(ArticleUsecase):
     def __init__(self, repo):
         self.repo = repo
 
-    def process_request(self, request_objects):
-        articles = self.repo.get_all(request_objects)
-        total = len(articles)
+    def process_request(self, request_object):
+        articles = self.repo.get_all(request_object)
+        total = self.repo.get_total(request_object)
         schema = ListArticleToJsonFormat()
         serialize = schema.dump(articles, many=True)
         meta = {
-            'page': getattr(request_objects, 'page'),
-            'limit': getattr(request_objects, 'limit'),
+            'page': getattr(request_object, 'page'),
+            'limit': getattr(request_object, 'limit'),
             'total': total
         }
 

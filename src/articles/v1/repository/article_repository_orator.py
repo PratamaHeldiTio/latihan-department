@@ -60,3 +60,12 @@ class ArticleRepositoryOrator(ArticleRepository):
 
     def article_is_exist(self, id):
         return self.db.table('article').where('id', '=', id).count()
+
+    def get_total(self, request_object):
+        search = getattr(request_object, 'search')
+        query = self.db.table('article')
+
+        if search:
+            query = query.where('title', 'ilike', '%{}%'.format(search))
+
+        return query.count()

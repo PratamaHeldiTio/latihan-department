@@ -7,14 +7,14 @@ class ListDepartmentUsecase(DepartmentUsecase):
     def __init__(self, repo):
         self.repo = repo
 
-    def process_request(self, request_objects):
-        department = self.repo.get_all(request_objects)
-        total = len(department)
+    def process_request(self, request_object):
+        department = self.repo.get_all(request_object)
+        total = self.repo.get_total(request_object)
         schema = ListDepartment()
         serialize = schema.dump(department, many=True)
         meta= {
-            'page': getattr(request_objects, 'page'),
-            'limit': getattr(request_objects, 'limit'),
+            'page': getattr(request_object, 'page'),
+            'limit': getattr(request_object, 'limit'),
             'total': total
         }
 
