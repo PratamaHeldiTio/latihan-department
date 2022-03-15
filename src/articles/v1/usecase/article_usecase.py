@@ -12,7 +12,7 @@ class ListArticleUsecase(ArticleUsecase):
 
     def process_request(self, request_objects):
         articles = self.repo.get_all(request_objects)
-        total = self.repo.get_total(request_objects)
+        total = len(articles)
         schema = ListArticleToJsonFormat()
         serialize = schema.dump(articles, many=True)
         meta = {

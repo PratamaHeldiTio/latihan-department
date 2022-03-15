@@ -5,9 +5,6 @@ class ArticleRepository(ABC, object):
     @abstractmethod
     def get_all(self, filters): pass
 
-    # @abstractmethod
-    # def get_by_id(self, pk): pass
-
     @abstractmethod
     def create(self, adict): pass
 
@@ -16,9 +13,6 @@ class ArticleRepository(ABC, object):
 
     @abstractmethod
     def delete_by_id(self, id): pass
-
-    @abstractmethod
-    def get_total(self, adict): pass
 
     @abstractmethod
     def article_is_exist(self, id): pass
