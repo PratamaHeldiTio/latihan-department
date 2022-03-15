@@ -36,29 +36,6 @@ class ArticleRepositoryOrator(ArticleRepository):
 
         return result
 
-    def get_total(self, request_object):
-        search = getattr(request_object, 'search')
-        query = self.db.table('article')
-
-        if search:
-            query = query.where('title', 'like', '%{}%'.format(search))
-
-        return query.count()
-
-    # def get_by_id(self, id):
-    #     query = self.db.table('article').where('id', id).first()
-    #     if query:
-    #         query = ({
-    #             'id': query['id'],
-    #             'title': query['title'],
-    #             'content': query['content'],
-    #             'created_at': query['created_at'],
-    #             'modified_at':query['modified_at'],
-    #             'created_by': query['created_by'],
-    #             'modified_by': query['modified_by'],
-    #         })
-    #     return query
-
     def create(self, request_object):
         return self.db.table('article').insert({
             'title': getattr(request_object, 'title'),
