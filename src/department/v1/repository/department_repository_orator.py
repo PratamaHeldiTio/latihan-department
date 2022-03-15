@@ -10,7 +10,7 @@ class DepartmentRepositoryOrator(DepartmentRepository):
         query = self.db.table('department')
 
         if getattr(request_object, 'search'):
-            query = query.where('name', 'like', '%{}%'.format(getattr(request_object, 'search')))
+            query = query.where('name', 'ilike', '%{}%'.format(getattr(request_object, 'search')))
 
         query = query.order_by(getattr(request_object, 'sortBy'), getattr(request_object, 'orderBy'))
 
@@ -57,7 +57,7 @@ class DepartmentRepositoryOrator(DepartmentRepository):
         query = self.db.table('department')
 
         if getattr(request_object, 'search'):
-            query = query.where('name', 'like', '%{}%'.format(getattr(request_object, 'search')))
+            query = query.where('name', 'ilike', '%{}%'.format(getattr(request_object, 'search')))
 
         return query.count()
 
