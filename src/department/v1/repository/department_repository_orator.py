@@ -58,13 +58,5 @@ class DepartmentRepositoryOrator(DepartmentRepository):
 
         return query
 
-    def get_total(self, request_object):
-        query = self.db.table('department')
-
-        if getattr(request_object, 'search'):
-            query = query.where('name', 'ilike', '%{}%'.format(getattr(request_object, 'search')))
-
-        return query.count()
-
     def department_is_exist(self, id):
         return self.db.table('department').where('id', '=', id).count()
