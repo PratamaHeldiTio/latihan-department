@@ -80,3 +80,8 @@ astroid==2.4.2
 #A fast and thorough lazy object proxy.
 #https://pypi.org/project/lazy-object-proxy/
 lazy-object-proxy==1.4.3
+
+
+pytest==3.6.0
+pytest-cov==2.6.0
+pytest-sanic==0.1.9
