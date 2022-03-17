@@ -19,3 +19,6 @@ class ArticleRepository(ABC, object):
 
     @abstractmethod
     def get_total(self, adict): pass
+
+    @abstractmethod
+    def get_by_id(self, id): pass

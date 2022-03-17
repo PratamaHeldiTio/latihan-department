@@ -12,7 +12,7 @@ class RequestSanicDict(Request):
         try:
             for key in dict(self.request.form):
                 dict_d[key] = self.request.form.get(key, '')
-        except Exception as e:
+        except Exception:
             pass
 
         return dict_d
@@ -21,7 +21,7 @@ class RequestSanicDict(Request):
         dict_d = {}
         try:
             dict_d.update(self.request.json)
-        except Exception as e:
+        except Exception:
             pass
 
         return dict_d
@@ -30,7 +30,7 @@ class RequestSanicDict(Request):
         dict_d = {}
         try:
             dict_d.update(self.request.query_args)
-        except Exception as e:
+        except Exception:
             pass
 
         return dict_d
@@ -41,7 +41,7 @@ class RequestSanicDict(Request):
             dict_d.update(self.json_to_dict())
             dict_d.update(self.form_to_dict())
             dict_d.update(self.json_to_dict())
-        except Exception as e:
+        except Exception:
             pass
 
         return dict_d

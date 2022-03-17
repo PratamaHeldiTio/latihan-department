@@ -11,21 +11,31 @@ class ListArticleUsecase(ArticleUsecase):
         self.repo = repo
 
     def process_request(self, request_object):
-        articles = self.repo.get_all(request_object)
-        total = self.repo.get_total(request_object)
-        schema = ListArticleToJsonFormat()
-        serialize = schema.dump(articles, many=True)
-        meta = {
-            'page': getattr(request_object, 'page'),
-            'limit': getattr(request_object, 'limit'),
-            'total': total
-        }
+        if request_object['id']:
+            article = self.repo.get_by_id(request_object['id'])
+            if article:
+                schema = ListArticleToJsonFormat()
+                serialize = schema.dump(article)
+                response = response_object(status_code=Config.SUCCESS, message=Config.SUCCESS, data=serialize)
+            else:
+                response = response_object(status_code=Config.DATA_NOT_FOUND, message=Config.DATA_NOT_FOUND)
+        else:
+            articles = self.repo.get_all(request_object)
+            total = self.repo.get_total(request_object)
+            schema = ListArticleToJsonFormat()
+            serialize = schema.dump(articles, many=True)
+            meta = {
+                'page': getattr(request_object, 'page'),
+                'limit': getattr(request_object, 'limit'),
+                'total': total
+            }
 
-        response = response_object(
-            status_code=Config.SUCCESS,
-            message=Config.SUCCESS,
-            data=serialize,
-            meta=meta)
+            response = response_object(
+                status_code=Config.SUCCESS,
+                message=Config.SUCCESS,
+                data=serialize,
+                meta=meta
+            )
 
         return ro.ResponseSuccess(response)
 
