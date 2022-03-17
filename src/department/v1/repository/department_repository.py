@@ -15,4 +15,11 @@ class DepartmentRepository(ABC, object):
     def delete_by_id(self, adict): pass
 
     @abstractmethod
+    def department_is_exist(self, id): pass
+
+    @abstractmethod
     def get_total(self, adict): pass
+
+    @abstractmethod
+    def get_by_id(self, id): pass
+

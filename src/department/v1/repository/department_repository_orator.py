@@ -69,3 +69,16 @@ class DepartmentRepositoryOrator(DepartmentRepository):
             query = query.where('name', 'ilike', '%{}%'.format(search))
 
         return query.count()
+
+    def get_by_id(self, id):
+        query = self.db.table('department').where('id', '=', id).first()
+
+        if query:
+            query = ({
+                'id': query['id'],
+                'name': query['name'],
+                'status': query['status'],
+                'created_at': query['created_at'],
+                'modified_at': query['modified_at']
+            })
+        return query
