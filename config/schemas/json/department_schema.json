@@ -5,6 +5,9 @@
     "description": "schema get list department",
     "type": "object",
     "properties": {
+      "id": {
+        "type": "integer"
+      },
       "search": {
         "type": "string"
       },

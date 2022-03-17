@@ -47,7 +47,8 @@ async def detail (request, identifier):
     if request.method == 'GET':
         adict = {'id': identifier}
         usecase = ListDepartmentUsecase(repo=repo_init)
-        response_object = usecase.execute(adict)
+        request_object = ListDepartmentRequestObject.from_dict(adict=adict, validator=validator)
+        response_object = usecase.execute(request_object)
 
     if request.method == 'PUT':
         usecase =UpdateDepartmentUsecase(repo=repo_init)

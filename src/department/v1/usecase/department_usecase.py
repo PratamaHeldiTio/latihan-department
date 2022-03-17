@@ -8,8 +8,8 @@ class ListDepartmentUsecase(DepartmentUsecase):
         self.repo = repo
 
     def process_request(self, request_object):
-        if request_object['id']:
-            department = self.repo.get_by_id(request_object['id'])
+        if getattr(request_object, 'id'):
+            department = self.repo.get_by_id(getattr(request_object, 'id'))
             if department:
                 schema = ListDepartment()
                 serialize = schema.dump(department)
