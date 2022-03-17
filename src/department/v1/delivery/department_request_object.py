@@ -5,6 +5,7 @@ from config.schemas.json.loader import JSONSchemaLoader
 class ListDepartmentRequestObject(ValidRequestObject):
 
     def __init__(self, **kwargs):
+        self.id = kwargs.get('id')
         self.sortBy = kwargs.get("sortBy")
         self.orderBy = kwargs.get("orderBy")
         self.limit = kwargs.get("limit")
@@ -24,6 +25,7 @@ class ListDepartmentRequestObject(ValidRequestObject):
         data = validator.get_valid_data()
 
         return ListDepartmentRequestObject(**{
+            'id': data.get('id', ''),
             "sortBy": data.get("sortBy", "id"),
             "orderBy": data.get("orderBy", "asc"),
             "limit": int(data.get("limit", "10")),

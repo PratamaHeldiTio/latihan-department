@@ -8,22 +8,32 @@ class ListDepartmentUsecase(DepartmentUsecase):
         self.repo = repo
 
     def process_request(self, request_object):
-        department = self.repo.get_all(request_object)
-        total = self.repo.get_total(request_object)
-        schema = ListDepartment()
-        serialize = schema.dump(department, many=True)
-        meta= {
-            'page': getattr(request_object, 'page'),
-            'limit': getattr(request_object, 'limit'),
-            'total': total
-        }
+        if getattr(request_object, 'id'):
+            department = self.repo.get_by_id(getattr(request_object, 'id'))
+            if department:
+                schema = ListDepartment()
+                serialize = schema.dump(department)
+                response = response_object(status_code=Config.SUCCESS, message=Config.SUCCESS, data=serialize)
+            else:
+                response = response_object(status_code=Config.DATA_NOT_FOUND, message=Config.DATA_NOT_FOUND)
+        else:
+            department = self.repo.get_all(request_object)
+            total = self.repo.get_total(request_object)
+            schema = ListDepartment()
+            serialize = schema.dump(department, many=True)
+            meta = {
+                'page': getattr(request_object, 'page'),
+                'limit': getattr(request_object, 'limit'),
+                'total': total
+            }
 
-        response = response_object(
-            status_code=Config.SUCCESS,
-            message=Config.SUCCESS,
-            data=serialize,
-            meta=meta
-        )
+            response = response_object(
+                status_code=Config.SUCCESS,
+                message=Config.SUCCESS,
+                data=serialize,
+                meta=meta
+            )
+
         return ro.ResponseSuccess(response)
 
 class CreateDepartmentUsecase(DepartmentUsecase):

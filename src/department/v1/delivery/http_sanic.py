@@ -37,12 +37,18 @@ async def index(request):
 
     return  json(response_object.value, status=Config.STATUS_CODES[response_object.type])
 
-@bp_department.route('/<identifier>', methods=['PUT', 'DELETE'])
+@bp_department.route('/<identifier>', methods=['GET', 'PUT', 'DELETE'])
 async def detail (request, identifier):
     identifier = int(identifier)
     request_dict = RequestSanicDict(request)
     repo_init = DepartmentRepositoryOrator(db=request.app.db)
     validator = JSONSchemaValidator()
+
+    if request.method == 'GET':
+        adict = {'id': identifier}
+        usecase = ListDepartmentUsecase(repo=repo_init)
+        request_object = ListDepartmentRequestObject.from_dict(adict=adict, validator=validator)
+        response_object = usecase.execute(request_object)
 
     if request.method == 'PUT':
         usecase =UpdateDepartmentUsecase(repo=repo_init)
