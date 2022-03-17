@@ -36,12 +36,17 @@ async def index(request):
 
     return json(response_object.value, status=Config.STATUS_CODES[response_object.type])
 
-@bp_articles.route('/<identifier>', methods=['PUT', 'DELETE'])
+@bp_articles.route('/<identifier>', methods=['GET', 'PUT', 'DELETE'])
 async def detail(request, identifier):
     request_dict = RequestSanicDict(request)
     repo_init = ArticleRepositoryOrator(db=request.app.db)
     validator = JSONSchemaValidator()
     identifier = int(identifier)
+
+    if request.method == 'GET':
+        adict = {'id': identifier}
+        usecase = ListArticleUsecase(repo=repo_init)
+        response_object = usecase.execute(adict)
 
     if request.method == 'PUT':
         usecase = UpdateArticleUsecase(repo=repo_init)
