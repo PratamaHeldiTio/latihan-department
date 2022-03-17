@@ -11,8 +11,8 @@ class ListArticleUsecase(ArticleUsecase):
         self.repo = repo
 
     def process_request(self, request_object):
-        if request_object['id']:
-            article = self.repo.get_by_id(request_object['id'])
+        if getattr(request_object, 'id'):
+            article = self.repo.get_by_id(getattr(request_object, 'id'))
             if article:
                 schema = ListArticleToJsonFormat()
                 serialize = schema.dump(article)
